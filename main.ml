@@ -75,8 +75,8 @@ let main =
     ~f:(fun row_idx first_accum row -> 
       lines := !lines + 1; first_accum @ List.foldi (String.split ~on:' ' row) ~init:[] 
       ~f:(fun col_idx accum weight -> (row_idx, col_idx, Int.of_string weight)::accum))
-  (* |> List.fold_right ~f:GraphSet.add ~init:GraphSet.empty *)
-  (* |> graphFold  *)
+  |> List.fold_right ~f:GraphSet.add ~init:GraphSet.empty
+  |> graphFold 
   |> List.filter ~f:(fun (_, _, v) -> v <> 0)
   |> Heap.of_list ~cmp:(fun (_, _, w) (_, _, o_w) -> Caml.Pervasives.compare w o_w) 
   |> createMST ~size:lines
